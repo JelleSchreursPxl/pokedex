@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, Image } from 'react-native'
+import { View, TouchableOpacity, Text, Image, Dimensions } from 'react-native'
 import React , {useState, useEffect} from 'react'
 import { useTailwind } from 'tailwind-rn/dist'
 import { Icon } from '@rneui/themed'
@@ -14,9 +14,6 @@ import { RootStackParamList } from '../navigation/RootNavigator';
 import { TabParamList } from '../navigation/TabNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import FavoriteScreen from './FavoritesScreen';
-
-// banner image
 
 type PokemonScreenNavigationProp = 
   CompositeNavigationProp<BottomTabNavigationProp<TabParamList>,
@@ -28,7 +25,7 @@ const PokemonScreen = () => {
   const tw = useTailwind();
 
   const navigation = useNavigation<PokemonScreenNavigationProp>();
-  const { params: { id} }  = useRoute<PokemonScreenRouteProp>();
+  const { params: { id } }  = useRoute<PokemonScreenRouteProp>();
 
   const [pokemondetail, setPokemon] = useState<PokemonDetail>();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
@@ -74,7 +71,3 @@ const PokemonScreen = () => {
 }
 
 export default PokemonScreen
-
-function isFavorite(): boolean {
-  return true;
-}

@@ -6,7 +6,7 @@ import { Icon } from '@rneui/themed';
 // import screens
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
-import FavoritesScreen from '../screens/FavoritesScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 // Typescript definition types for TabNavigator
 export type TabParamList = {
@@ -48,7 +48,7 @@ const TabNavigator = () => {
     })}>
       <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
       <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false}} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
+      <Tab.Screen name="Favorites" component={SettingsScreen} options={{headerShown: false}}/>
     </Tab.Navigator>
   )
 }
