@@ -41,14 +41,14 @@ const TabNavigator = () => {
           return <Icon name="home" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"} />
         } else if (route.name === 'Search') {
           return <Icon name="search" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"} />
-        } else if (route.name === 'Favorites') {
-          return <Icon name="heart" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"}/>
+        } else if (route.name === 'Settings') {
+          return <Icon name="cog" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"}/>
         }
       }
     })}>
       <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
       <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false}} />
-      <Tab.Screen name="Favorites" component={SettingsScreen} options={{headerShown: false}}/>
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{headerShown: false}}/>
     </Tab.Navigator>
   )
 }

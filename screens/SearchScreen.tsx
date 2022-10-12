@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView } from 'react-native'
+import { FlatList, SafeAreaView, Dimensions, View, Text } from 'react-native'
 import React, { useState, useEffect} from 'react'
 // import { Input } from '@rneui/themed';
 import { useTailwind } from 'tailwind-rn/dist';
@@ -10,6 +10,18 @@ const SearchScreen = () => {
 
   const [search, setSearch] = useState('')
   const [pokemon, setPokemon] = useState<Pokemon[]>([])
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+
+  const setOrientation = () => {
+    if (windowWidth > windowHeight) {
+      return 'landscape'
+    } else {
+      return 'portrait'
+    }
+  }
 
   useEffect(() => {
     const xhr = new XMLHttpRequest()
@@ -23,6 +35,25 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={tw("mt-10")}>
+      {/* foreach pokemon in pokemon */}
+      { setOrientation() === 'portrait' ? (
+        <View>
+          <Input 
+          placeholder='Search ...' 
+          value={search} 
+          onChangeText={setSearch}
+          containerStyle={tw("w-3/4 mx-auto")}
+          style={tw("text-sm")}
+          />
+
+        <FlatList contentContainerStyle={tw("pb-20")} 
+          data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
+          renderItem={({ item }) => <ListCard item={item}/>}
+          /> 
+        </View>
+        ) : (
+        <SafeAreaView>
+          <View style={tw(`w-1/2`)}>
           <Input 
             placeholder='Search ...' 
             value={search} 
@@ -31,12 +62,17 @@ const SearchScreen = () => {
             style={tw("text-sm")}
             />
 
-      {/* foreach pokemon in pokemon */}
-      <FlatList
-        data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
-        renderItem={({ item }) => <ListCard item={item}/>}
-        />
-
+            <FlatList contentContainerStyle={tw("pb-96")}
+              data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
+              renderItem={({ item }) => <ListCard item={item}/>}
+              />
+          </View>
+          <View style={tw(`w-1/2 justify-center items-center`)}>
+            <Text>Test</Text>
+          </View>
+        </SafeAreaView>
+        )
+      }
     </SafeAreaView>
   )
 }

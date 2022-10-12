@@ -14,6 +14,8 @@ import { RootStackParamList } from '../navigation/RootNavigator';
 import { TabParamList } from '../navigation/TabNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import PortraitPokemonScreen from '../components/PortraitPokemonScreen';
+import LandscapePokemonScreen from '../components/LandscapePokemonScreen';
 
 type PokemonScreenNavigationProp = 
   CompositeNavigationProp<BottomTabNavigationProp<TabParamList>,
@@ -28,10 +30,20 @@ const PokemonScreen = () => {
   const { params: { id } }  = useRoute<PokemonScreenRouteProp>();
 
   const [pokemondetail, setPokemon] = useState<PokemonDetail>();
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+
+  const setOrientation = () => {
+    if (windowWidth > windowHeight) {
+      return 'landscape'
+    } else {
+      return 'portrait'
+    }
   }
+  
+  Dimensions.addEventListener('change', setOrientation);
 
   useEffect(() => {
     const xhr = new XMLHttpRequest()
@@ -49,23 +61,13 @@ const PokemonScreen = () => {
         <Icon name="closecircleo" type="antdesign" size={24} color="black" />
       </TouchableOpacity>
 
-      <View style={tw(`flex justify-center items-center`)}>
-        <Image source={{uri: pokemondetail?.sprites.front_default}} style={{ height: 320, width: 320 }} resizeMode={'contain'} />
-        <View style={[tw(`flex-row content-center items-center`)]}>
-          <Text style={{fontSize: 24, fontWeight: "500" }}>#{pokemondetail?.id} - </Text>
-          <Text style={{fontSize: 24, fontWeight: "500", marginRight: 24}}>{pokemondetail?.name}</Text>
-          { isFavorite ? (
-            <TouchableOpacity onPress={toggleFavorite}>
-              <Icon name="heart" type="antdesign" size={20} color="red"/>
-            </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={toggleFavorite}>
-                <Icon name="hearto" type="antdesign" size={20} color="red" />
-              </TouchableOpacity>
-            )
-          }
-        </View>
-      </View>
+      { setOrientation() === 'portrait' ? (
+        <PortraitPokemonScreen pokemon={pokemondetail} />
+      ) : (
+        <LandscapePokemonScreen  />
+      )}
+      
+
     </View>
   )
 }

@@ -59,11 +59,6 @@
   margin-right: auto
 }
 
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem
-}
-
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem
@@ -73,12 +68,24 @@
   margin-top: 2.5rem
 }
 
-.mt-4 {
-  margin-top: 1rem
-}
-
 .mt-6 {
   margin-top: 1.5rem
+}
+
+.mb-20 {
+  margin-bottom: 5rem
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem
+}
+
+.mt-5 {
+  margin-top: 1.25rem
+}
+
+.mb-40 {
+  margin-bottom: 10rem
 }
 
 .block {
@@ -111,6 +118,10 @@
 
 .w-3\/4 {
   width: 75%
+}
+
+.w-1\/2 {
+  width: 50%
 }
 
 .flex-1 {
@@ -149,12 +160,24 @@
   border-width: 1px
 }
 
-.p-4 {
-  padding: 1rem
+.pb-40 {
+  padding-bottom: 10rem
 }
 
-.text-center {
-  text-align: center
+.pb-10 {
+  padding-bottom: 2.5rem
+}
+
+.pb-20 {
+  padding-bottom: 5rem
+}
+
+.pb-16 {
+  padding-bottom: 4rem
+}
+
+.pb-96 {
+  padding-bottom: 24rem
 }
 
 .text-base {
@@ -170,11 +193,6 @@
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem
 }
 
 .font-bold {

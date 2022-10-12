@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Card } from '@rneui/themed'
 import { useTailwind } from 'tailwind-rn/dist'
@@ -9,6 +9,17 @@ const ListCard = ({ item } : Props ) => {
   const navigation = useNavigation();
 
   const [pokemon, setPokemon] = useState<PokemonDetail>()
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+  const setOrientation = () => {
+    if (windowWidth > windowHeight) {
+      return 'landscape'
+    } else {
+      return 'portrait'
+    }
+  }
 
   useEffect(() => {
     const xhr = new XMLHttpRequest()
