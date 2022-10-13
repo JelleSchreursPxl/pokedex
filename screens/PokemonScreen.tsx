@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text, Image, Dimensions } from 'react-native'
 import React , {useState, useEffect} from 'react'
-import { useTailwind } from 'tailwind-rn/dist'
 import { Icon } from '@rneui/themed'
 import { 
   RouteProp, 
@@ -14,8 +13,6 @@ import { RootStackParamList } from '../navigation/RootNavigator';
 import { TabParamList } from '../navigation/TabNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import PortraitPokemonScreen from '../components/PortraitPokemonScreen';
-import LandscapePokemonScreen from '../components/LandscapePokemonScreen';
 
 type PokemonScreenNavigationProp = 
   CompositeNavigationProp<BottomTabNavigationProp<TabParamList>,
@@ -23,8 +20,7 @@ type PokemonScreenNavigationProp =
 
 type PokemonScreenRouteProp = RouteProp<RootStackParamList, 'PokemonModal'>;
 
-const PokemonScreen = () => {
-  const tw = useTailwind();
+const PokemonScreen = ({ pokemon } : any) => {
 
   const navigation = useNavigation<PokemonScreenNavigationProp>();
   const { params: { id } }  = useRoute<PokemonScreenRouteProp>();
@@ -42,8 +38,17 @@ const PokemonScreen = () => {
       return 'portrait'
     }
   }
-  
-  Dimensions.addEventListener('change', setOrientation);
+  const [orientation, setOrientationState] = useState(setOrientation());
+  useEffect(() => {
+    Dimensions.addEventListener('change', () => {
+      setOrientationState(setOrientation());
+    });
+  }, []);
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  }
 
   useEffect(() => {
     const xhr = new XMLHttpRequest()
@@ -57,18 +62,27 @@ const PokemonScreen = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={navigation.goBack} style={tw(`absolute right-5 top-5 z-50`)}>
+      <TouchableOpacity onPress={navigation.goBack} style={{position: 'absolute', right: 20, top: 20, zIndex: 50}}>
         <Icon name="closecircleo" type="antdesign" size={24} color="black" />
       </TouchableOpacity>
-
-      { setOrientation() === 'portrait' ? (
-        <PortraitPokemonScreen pokemon={pokemondetail} />
-      ) : (
-        <LandscapePokemonScreen  />
-      )}
-      
-
+      <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <Image source={{uri: pokemondetail?.sprites.front_default}} style={{ height: 320, width: 320 }} resizeMode={'contain'} />
+      <View style={{display: 'flex', flexDirection: 'row', alignContent: 'center', alignItems:'center'}}>
+        <Text style={{fontSize: 24, fontWeight: "500" }}>#{pokemondetail?.id} - </Text>
+        <Text style={{fontSize: 24, fontWeight: "500", marginRight: 24}}>{pokemondetail?.name}</Text>
+        { isFavorite ? (
+          <TouchableOpacity onPress={toggleFavorite}>
+            <Icon name="heart" type="antdesign" size={20} color="red"/>
+          </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={toggleFavorite}>
+              <Icon name="hearto" type="antdesign" size={20} color="red" />
+            </TouchableOpacity>
+          )
+        }
+      </View>
     </View>
+  </View>
   )
 }
 

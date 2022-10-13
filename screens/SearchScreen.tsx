@@ -1,13 +1,10 @@
 import { FlatList, SafeAreaView, Dimensions, View, Text } from 'react-native'
 import React, { useState, useEffect} from 'react'
 // import { Input } from '@rneui/themed';
-import { useTailwind } from 'tailwind-rn/dist';
 import ListCard from '../components/ListCard';
 import { Input } from '@rneui/themed'
 
 const SearchScreen = () => {
-  const tw = useTailwind();
-
   const [search, setSearch] = useState('')
   const [pokemon, setPokemon] = useState<Pokemon[]>([])
 
@@ -34,45 +31,45 @@ const SearchScreen = () => {
   }, [])
 
   return (
-    <SafeAreaView style={tw("mt-10")}>
+    <SafeAreaView style={{marginTop: 40}}>
       {/* foreach pokemon in pokemon */}
-      { setOrientation() === 'portrait' ? (
+      {/* { setOrientation() === 'portrait' ? ( */}
         <View>
           <Input 
           placeholder='Search ...' 
           value={search} 
           onChangeText={setSearch}
-          containerStyle={tw("w-3/4 mx-auto")}
-          style={tw("text-sm")}
+          containerStyle={{ width: '75%', alignSelf: 'center'}}
+          style={{fontSize: 14, lineHeight: 20}}
           />
 
-        <FlatList contentContainerStyle={tw("pb-20")} 
+        <FlatList contentContainerStyle={{paddingBottom: 80}}
           data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
           renderItem={({ item }) => <ListCard item={item}/>}
           /> 
         </View>
-        ) : (
-        <SafeAreaView>
-          <View style={tw(`w-1/2`)}>
-          <Input 
-            placeholder='Search ...' 
-            value={search} 
-            onChangeText={setSearch}
-            containerStyle={tw("w-3/4 mx-auto")}
-            style={tw("text-sm")}
-            />
+      {/* //   ) : (
+      //   <SafeAreaView>
+      //     <View style={tw(`w-1/2`)}>
+      //     <Input 
+      //       placeholder='Search ...' 
+      //       value={search} 
+      //       onChangeText={setSearch}
+      //       containerStyle={tw("w-3/4 mx-auto")}
+      //       style={tw("text-sm")}
+      //       />
 
-            <FlatList contentContainerStyle={tw("pb-96")}
-              data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
-              renderItem={({ item }) => <ListCard item={item}/>}
-              />
-          </View>
-          <View style={tw(`w-1/2 justify-center items-center`)}>
-            <Text>Test</Text>
-          </View>
-        </SafeAreaView>
-        )
-      }
+      //       <FlatList contentContainerStyle={tw("pb-96")}
+      //         data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
+      //         renderItem={({ item }) => <ListCard item={item}/>}
+      //         />
+      //     </View>
+      //     <View style={tw(`w-1/2 justify-center items-center`)}>
+      //       <Text>Test</Text>
+      //     </View>
+      //   </SafeAreaView>
+      //   )
+      // } */}
     </SafeAreaView>
   )
 }

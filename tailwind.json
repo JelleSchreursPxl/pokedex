@@ -93,26 +93,6 @@
 			"marginTop": 24
 		}
 	},
-	"mb-20": {
-		"style": {
-			"marginBottom": 80
-		}
-	},
-	"mb-10": {
-		"style": {
-			"marginBottom": 40
-		}
-	},
-	"mt-5": {
-		"style": {
-			"marginTop": 20
-		}
-	},
-	"mb-40": {
-		"style": {
-			"marginBottom": 160
-		}
-	},
 	"block": {
 		"style": {
 			"display": "block"
@@ -211,24 +191,9 @@
 			"borderLeftWidth": 1
 		}
 	},
-	"pb-40": {
-		"style": {
-			"paddingBottom": 160
-		}
-	},
-	"pb-10": {
-		"style": {
-			"paddingBottom": 40
-		}
-	},
 	"pb-20": {
 		"style": {
 			"paddingBottom": 80
-		}
-	},
-	"pb-16": {
-		"style": {
-			"paddingBottom": 64
 		}
 	},
 	"pb-96": {
