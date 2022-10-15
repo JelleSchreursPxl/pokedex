@@ -43,6 +43,19 @@ type PokemonDetail = {
 }
 
 
+
+// type ListCardProps = {
+//   item: {
+//     name: string
+//     url: string
+//   }
+//   chosenPokemon: (item: PokemonDetail) => void,
+//   search: string,
+//   pokemon: PokemonDetail[],
+//   object: PokemonDetail
+// }
+
+
 type Pokemon = {
   name: string,
   url: string
@@ -52,7 +65,8 @@ type Props = {
   item: {
     name: string,
     url: string
-  }
+  }, 
+  chosenPokemon: (item: any) => void
 }
 
 type PokemonDetailed = {
@@ -98,5 +112,69 @@ type PokemonDetailed = {
         name: string
       }
     }]
+  }
+}
+
+type ListSelection = {
+    selection: string | undefined
+}
+
+
+type PokemonInfo = {
+  id: number,
+  name: string,
+  weight: number,
+  height: number,
+  base_experience: number,
+  sprites: {
+    front_default: string
+  },
+  types: [{
+    type: {
+      name: string
+    }
+  }],
+  stats: [{
+    base_stat: number,
+    effort: number,
+    stat: {
+      name: string
+    }
+  }],
+  abilities: [{
+    ability: {
+      name: string
+    },
+    is_hidden: boolean
+  }],
+  moves: [{
+    move: {
+      name: string
+    }
+  }],
+  evolution: [{
+    evolves_to: [{
+      species: {
+        name: string
+        url : string
+      }
+    }]
+  }]
+}
+
+type User = {
+  email: string
+  password: string
+}
+
+type RegisterUser = {
+  name: string
+  email: string
+  password: string
+}
+
+type Store= {
+  theme: {
+    theme: any
   }
 }

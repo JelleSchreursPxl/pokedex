@@ -1,8 +1,10 @@
-import { FlatList, SafeAreaView, Dimensions, View, Text } from 'react-native'
+import { FlatList, SafeAreaView, Dimensions, View, Image, ScrollView } from 'react-native'
 import React, { useState, useEffect} from 'react'
 // import { Input } from '@rneui/themed';
 import ListCard from '../components/ListCard';
 import { Input } from '@rneui/themed'
+import PokemonScreen from './PokemonScreen';
+import LandScapePokemonView from '../components/LandScapePokemonView';
 
 const SearchScreen = () => {
   const [search, setSearch] = useState('')
@@ -11,12 +13,11 @@ const SearchScreen = () => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
-
   const setOrientation = () => {
     if (windowWidth > windowHeight) {
-      return 'landscape'
+      return true
     } else {
-      return 'portrait'
+      return false
     }
   }
 
@@ -30,48 +31,68 @@ const SearchScreen = () => {
     }
   }, [])
 
-  return (
-    <SafeAreaView style={{marginTop: 40}}>
-      {/* foreach pokemon in pokemon */}
-      {/* { setOrientation() === 'portrait' ? ( */}
-        <View>
-          <Input 
-          placeholder='Search ...' 
-          value={search} 
-          onChangeText={setSearch}
-          containerStyle={{ width: '75%', alignSelf: 'center'}}
-          style={{fontSize: 14, lineHeight: 20}}
-          />
+  const [poke, setPoke] = useState<Pokemon>()
+  const chosenPokemon = (chosenPokemon: Pokemon) => {
+    setPoke(chosenPokemon)
+  }
 
-        <FlatList contentContainerStyle={{paddingBottom: 80}}
-          data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
-          renderItem={({ item }) => <ListCard item={item}/>}
-          /> 
+  // console.log(poke);
+
+  const screenRenders = () => {
+    if(!setOrientation()) {
+    return (
+      <SafeAreaView style={{marginTop: 40}}>
+          <View>
+            <Input 
+            placeholder='Search ...' 
+            value={search} 
+            onChangeText={setSearch}
+            containerStyle={{ width: '75%', alignSelf: 'center'}}
+            style={{fontSize: 14, lineHeight: 20}}
+            />
+
+          <FlatList contentContainerStyle={{paddingBottom: 80}}
+            data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
+            renderItem={({ item }) => <ListCard item={item} chosenPokemon={chosenPokemon}/>}
+            /> 
+          
+          {
+            poke == null ? null : <PokemonScreen />
+          }
         </View>
-      {/* //   ) : (
-      //   <SafeAreaView>
-      //     <View style={tw(`w-1/2`)}>
-      //     <Input 
-      //       placeholder='Search ...' 
-      //       value={search} 
-      //       onChangeText={setSearch}
-      //       containerStyle={tw("w-3/4 mx-auto")}
-      //       style={tw("text-sm")}
-      //       />
 
-      //       <FlatList contentContainerStyle={tw("pb-96")}
-      //         data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
-      //         renderItem={({ item }) => <ListCard item={item}/>}
-      //         />
-      //     </View>
-      //     <View style={tw(`w-1/2 justify-center items-center`)}>
-      //       <Text>Test</Text>
-      //     </View>
-      //   </SafeAreaView>
-      //   )
-      // } */}
     </SafeAreaView>
+    ); 
+    } else {
+      return (
+        <SafeAreaView style={{marginTop: 40}}>
+          <View>
+            <Input 
+            placeholder='Search ...' 
+            value={search} 
+            onChangeText={setSearch}
+            containerStyle={{ width: '75%', alignSelf: 'center'}}
+            style={{fontSize: 14, lineHeight: 20}}
+            />
+
+            <View style={{flexDirection: 'row'}}>
+              <FlatList contentContainerStyle={{paddingBottom: 80}}
+                data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
+                renderItem={({ item }) => <ListCard item={item} chosenPokemon={chosenPokemon}/>}
+              /> 
+                <LandScapePokemonView selection={poke?.url}/>
+            </View>
+          
+        </View>    
+        </SafeAreaView>
+      );
+    }
+  };
+
+  return (
+    screenRenders()
   )
 }
+
 
 export default SearchScreen

@@ -4,7 +4,7 @@ import { Card } from '@rneui/themed'
 import { useTailwind } from 'tailwind-rn/dist'
 import { useNavigation } from '@react-navigation/native';
 
-const ListCard = ({ item } : Props ) => {
+const ListCard = ({ item , chosenPokemon } : Props) => {
   const tw = useTailwind();
   const navigation = useNavigation();
 
@@ -13,11 +13,11 @@ const ListCard = ({ item } : Props ) => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
-  const setOrientation = () => {
+  const screenDisplayOrientation = () => {
     if (windowWidth > windowHeight) {
-      return 'landscape'
+      return true
     } else {
-      return 'portrait'
+      return false
     }
   }
 
@@ -74,30 +74,59 @@ const ListCard = ({ item } : Props ) => {
     }
   }
 
+  const screenRenders = () => {
+    if (!screenDisplayOrientation()) {
+        return (
+            <TouchableOpacity onPress={() => navigation.navigate('PokemonModal', {
+              id: pokemon?.id,
+            })}>
+              <Card containerStyle={{overflow: 'hidden', justifyContent: 'center', marginHorizontal: 16, height: 80}}>
+                <View style={{display: 'flex', flexDirection: 'row', marginVertical: 4, marginHorizontal: 8}}>
+                    <Image source={{ uri: pokemon?.sprites.front_default }} style={{width: 80, height:80 }} resizeMode={'contain'}/>
+                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: 16}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 16}}>{ pokemon?.name }</Text>
+                      <View style={{display: 'flex', flexDirection: 'row'}}>
+                        { pokemon?.types.map((type, index) => (
+                          <Text key={index} 
+                                style={{fontSize: 16, backgroundColor : typeColor(type.type.name), borderRadius: 20, paddingHorizontal: 8, paddingVertical: 2, marginRight: 4 }}>
+                                  { type.type.name }
+                          </Text>
+                        ))}
+                      </View>
+                    </View>
+                </View>
+              </Card>
+            </TouchableOpacity> 
+        )}
+        else {
+          return (
+            <TouchableOpacity onPress={() => chosenPokemon(item)}>
+              <Card containerStyle={{overflow: 'hidden', justifyContent: 'center', marginHorizontal: 16, height: 80}}>
+                <View style={{display: 'flex', flexDirection: 'row', marginVertical: 4, marginHorizontal: 8}}>
+                    <Image source={{ uri: pokemon?.sprites.front_default }} style={{width: 80, height:80 }} resizeMode={'contain'}/>
+                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: 16}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 16}}>{ pokemon?.name }</Text>
+                      <View style={{display: 'flex', flexDirection: 'row'}}>
+                        { pokemon?.types.map((type, index) => (
+                          <Text key={index} 
+                                style={{fontSize: 16, backgroundColor : typeColor(type.type.name), borderRadius: 20, paddingHorizontal: 8, paddingVertical: 2, marginRight: 4 }}>
+                                  { type.type.name }
+                          </Text>
+                        ))}
+                      </View>
+                    </View>
+                </View>
+              </Card>
+            </TouchableOpacity> )
+            }
+          };
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('PokemonModal', {
-      id: pokemon?.id,
-    })}>
-      <Card containerStyle={tw("h-20 mx-4 my-1.5 justify-center overflow-hidden")}>
-        <View style={tw(`flex-row my-1 mx-2 items-center`)}>
-            <Image source={{ uri: pokemon?.sprites.front_default }} style={tw("w-20 h-20 ")} resizeMode={'contain'}/>
-            <View style={tw(`flex-col content-center`)}>
-              <Text style={tw(`text-base font-bold`)}>{ pokemon?.name }</Text>
-              <View style={tw(`flex-row`)}>
-                { pokemon?.types.map((type, index) => (
-                  <Text key={index} 
-                        style={[tw(`text-sm`), 
-                        {backgroundColor : typeColor(type.type.name), borderRadius: 20, paddingHorizontal: 8, paddingVertical: 2, marginRight: 4 }]}>
-                          { type.type.name }
-                  </Text>
-                ))}
-              </View>
-            </View>
-        </View>
-      </Card>
-    </TouchableOpacity>
+    <View>
+      { pokemon ? screenRenders() : null }
+    </View>
   )
+
 }
 
 export default ListCard

@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState }from 'react'
 import { useTheme } from 'react-native-rapi-ui';
 import  AsyncStorage  from '@react-native-async-storage/async-storage';
@@ -7,10 +7,12 @@ import {
   Switch
 } from 'react-native-paper';
 
+
 const SettingsScreen = () => {
   const { setTheme } = useTheme();
   const [isEnabled, setEnabled] = useState(false);
   const toggleSwitch = () => setEnabled(previousState => !previousState);
+
 
   const setDarkMode = async () => {
     try {
@@ -33,7 +35,7 @@ const SettingsScreen = () => {
 
   return (
     <SafeAreaView>
-      <View style={{display: 'flex', flexDirection: 'column', margin: 16}}>
+      <View style={{display: 'flex', flexDirection: 'column', margin: 16, width: '100%'}}>
         <Text style={{fontSize: 32, fontWeight:"700", marginBottom: 16}}>Settings</Text>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center' ,marginVertical: 24}}>
           <Switch onValueChange={handleTheme} value={isEnabled}/>
@@ -41,26 +43,17 @@ const SettingsScreen = () => {
             Dark Mode
           </Text>
         </View>
-        
-        {/* <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center' , marginTop: 24}}>
-          <View style={{display: 'flex', flexDirection: 'column'}}>
-          <Text style={{fontSize: 24, fontWeight: "700" }}>
-            Language
-          </Text>
-          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center' ,marginVertical: 24}}>
-            <Switch value={i18n.language === 'en'}/>
-            <Text style={{fontSize: 18, fontWeight: "500", marginHorizontal: 16}}>
-              EN
-            </Text>
-            <Switch value={i18n.language === 'nl'}/>
-            <Text style={{fontSize: 18, fontWeight: "500", marginHorizontal: 16}}>
-              NL
-            </Text>
-            </View>
-          </View>   
-        </View> */}
-        
       </View>
+      <View style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
+        <TouchableOpacity 
+          // onPress={handleSignOut}
+          style={{ width: '60%', backgroundColor: '#000', paddingVertical: 16, borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{fontSize: 16, fontWeight: "700", color: '#fff'}}>
+              Logout
+            </Text>
+          </TouchableOpacity>
+      </View>
+
     </SafeAreaView>
   )
 }
