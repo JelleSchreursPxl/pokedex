@@ -1,17 +1,18 @@
 import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Card } from '@rneui/themed'
-import { useTailwind } from 'tailwind-rn/dist'
 import { useNavigation } from '@react-navigation/native';
+import { listcard } from '../styles/listcard';
+import { useTheme } from 'react-native-rapi-ui';
 
 const ListCard = ({ item , chosenPokemon } : Props) => {
-  const tw = useTailwind();
   const navigation = useNavigation();
 
   const [pokemon, setPokemon] = useState<PokemonDetail>()
 
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
+  const { isDarkmode } = useTheme();
 
   const screenDisplayOrientation = () => {
     if (windowWidth > windowHeight) {
@@ -20,16 +21,6 @@ const ListCard = ({ item , chosenPokemon } : Props) => {
       return false
     }
   }
-
-  useEffect(() => {
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', item.url)
-    xhr.send()
-    xhr.onload = () => {
-      const response = JSON.parse(xhr.response)
-      setPokemon(response)
-    }
-  }, [item])
 
   const typeColor = (type: string) => {
     switch (type) {
@@ -73,22 +64,34 @@ const ListCard = ({ item , chosenPokemon } : Props) => {
         return '#A3ACAE';
     }
   }
+  
+
+  useEffect(() => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', item.url)
+    xhr.send()
+    xhr.onload = () => {
+      const response = JSON.parse(xhr.response)
+      setPokemon(response)
+    }
+  }, [item])
 
   const screenRenders = () => {
     if (!screenDisplayOrientation()) {
         return (
             <TouchableOpacity onPress={() => navigation.navigate('PokemonModal', {
-              id: pokemon?.id,
+              id: pokemon?.id, style: { backgroundColor: isDarkmode ? 'black' : 'white', 
+              color: isDarkmode ? 'white' : 'black' }
             })}>
-              <Card containerStyle={{overflow: 'hidden', justifyContent: 'center', marginHorizontal: 16, height: 80}}>
-                <View style={{display: 'flex', flexDirection: 'row', marginVertical: 4, marginHorizontal: 8}}>
-                    <Image source={{ uri: pokemon?.sprites.front_default }} style={{width: 80, height:80 }} resizeMode={'contain'}/>
-                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: 16}}>
-                      <Text style={{fontWeight: 'bold', fontSize: 16}}>{ pokemon?.name }</Text>
-                      <View style={{display: 'flex', flexDirection: 'row'}}>
+              <Card containerStyle={[listcard.cardContainer, {backgroundColor: isDarkmode ? 'black' : 'white' }]}>
+                <View style={listcard.view}>
+                    <Image source={{ uri: pokemon?.sprites.front_default }} style={listcard.image} resizeMode={'contain'}/>
+                    <View style={listcard.cardDisplay}>
+                      <Text style={[listcard.text, {color: isDarkmode ? 'white' : 'black' }]}>{ pokemon?.name }</Text>
+                      <View style={listcard.typesview}>
                         { pokemon?.types.map((type, index) => (
                           <Text key={index} 
-                                style={{fontSize: 16, backgroundColor : typeColor(type.type.name), borderRadius: 20, paddingHorizontal: 8, paddingVertical: 2, marginRight: 4 }}>
+                                style={[{ backgroundColor : typeColor(type.type.name)}, listcard.typeText, {color: isDarkmode ? 'white' : 'black' }]}>
                                   { type.type.name }
                           </Text>
                         ))}
@@ -101,15 +104,15 @@ const ListCard = ({ item , chosenPokemon } : Props) => {
         else {
           return (
             <TouchableOpacity onPress={() => chosenPokemon(item)}>
-              <Card containerStyle={{overflow: 'hidden', justifyContent: 'center', marginHorizontal: 16, height: 80}}>
-                <View style={{display: 'flex', flexDirection: 'row', marginVertical: 4, marginHorizontal: 8}}>
-                    <Image source={{ uri: pokemon?.sprites.front_default }} style={{width: 80, height:80 }} resizeMode={'contain'}/>
-                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: 16}}>
-                      <Text style={{fontWeight: 'bold', fontSize: 16}}>{ pokemon?.name }</Text>
-                      <View style={{display: 'flex', flexDirection: 'row'}}>
+              <Card containerStyle={[listcard.cardContainer, {backgroundColor: isDarkmode ? 'black' : 'white' }]}>
+                <View style={listcard.view}>
+                    <Image source={{ uri: pokemon?.sprites.front_default }} style={listcard.image} resizeMode={'contain'}/>
+                    <View style={listcard.cardDisplay}>
+                      <Text style={[listcard.text, {color: isDarkmode ? 'white' : 'black' }]}>{ pokemon?.name }</Text>
+                      <View style={listcard.typesview}>
                         { pokemon?.types.map((type, index) => (
                           <Text key={index} 
-                                style={{fontSize: 16, backgroundColor : typeColor(type.type.name), borderRadius: 20, paddingHorizontal: 8, paddingVertical: 2, marginRight: 4 }}>
+                                style={[{ backgroundColor : typeColor(type.type.name)}, listcard.typeText, {color: isDarkmode ? 'white' : 'black' }]}>
                                   { type.type.name }
                           </Text>
                         ))}

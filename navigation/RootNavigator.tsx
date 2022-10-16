@@ -9,7 +9,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // app navigation
 import TabNavigator from './TabNavigator';
 import PokemonScreen from '../screens/PokemonScreen';
-import { useColorScheme } from 'react-native';
 
 export type RootStackParamList = {
   Main: undefined,
@@ -20,8 +19,6 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 // const AuthStack = createNativeStackNavigator();
 
 const RootNavigator = () => {
-   const isDarkMode = useColorScheme() === 'dark';
-
     return (
       <RootStack.Navigator>
         <RootStack.Group>

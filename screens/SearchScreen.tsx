@@ -5,6 +5,9 @@ import ListCard from '../components/ListCard';
 import { Input } from '@rneui/themed'
 import PokemonScreen from './PokemonScreen';
 import LandScapePokemonView from '../components/LandScapePokemonView';
+import { searchscreen } from '../styles/searchscreen';
+import Strings from '../constants/Strings';
+import { useTheme } from 'react-native-rapi-ui';
 
 const SearchScreen = () => {
   const [search, setSearch] = useState('')
@@ -31,27 +34,25 @@ const SearchScreen = () => {
     }
   }, [])
 
+  const { isDarkmode } = useTheme();
   const [poke, setPoke] = useState<Pokemon>()
   const chosenPokemon = (chosenPokemon: Pokemon) => {
     setPoke(chosenPokemon)
   }
 
-  // console.log(poke);
-
   const screenRenders = () => {
     if(!setOrientation()) {
     return (
-      <SafeAreaView style={{marginTop: 40}}>
-          <View>
+      <SafeAreaView style={[searchscreen.container, {backgroundColor: isDarkmode ? 'black' : 'white'}]}>
             <Input 
-            placeholder='Search ...' 
+            placeholder={Strings.searchScreen.search}
             value={search} 
             onChangeText={setSearch}
-            containerStyle={{ width: '75%', alignSelf: 'center'}}
-            style={{fontSize: 14, lineHeight: 20}}
+            containerStyle={searchscreen.searchContainer}
+            style={[searchscreen.searchInput, {color: isDarkmode ? 'white' : 'black'}, { backgroundColor: isDarkmode ? 'black' : 'white'}]}
             />
 
-          <FlatList contentContainerStyle={{paddingBottom: 80}}
+          <FlatList contentContainerStyle={searchscreen.flatlist}
             data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
             renderItem={({ item }) => <ListCard item={item} chosenPokemon={chosenPokemon}/>}
             /> 
@@ -59,31 +60,29 @@ const SearchScreen = () => {
           {
             poke == null ? null : <PokemonScreen />
           }
-        </View>
 
     </SafeAreaView>
     ); 
     } else {
       return (
-        <SafeAreaView style={{marginTop: 40}}>
-          <View>
+        <SafeAreaView style={[searchscreen.container, {backgroundColor: isDarkmode ? 'black' : 'white'}]}>
             <Input 
-            placeholder='Search ...' 
+            placeholder={Strings.searchScreen.search}
             value={search} 
             onChangeText={setSearch}
-            containerStyle={{ width: '75%', alignSelf: 'center'}}
-            style={{fontSize: 14, lineHeight: 20}}
+            containerStyle={searchscreen.searchContainer}
+            style={[searchscreen.searchInput, {color: isDarkmode ? 'white' : 'black'}, { backgroundColor: isDarkmode ? 'black' : 'white'}]}
             />
 
             <View style={{flexDirection: 'row'}}>
-              <FlatList contentContainerStyle={{paddingBottom: 80}}
+              <FlatList contentContainerStyle={searchscreen.flatlist}
                 data={pokemon?.filter((item) => item.name.includes(search.toLowerCase()))}
                 renderItem={({ item }) => <ListCard item={item} chosenPokemon={chosenPokemon}/>}
               /> 
+              {
                 <LandScapePokemonView selection={poke?.url}/>
+              }
             </View>
-          
-        </View>    
         </SafeAreaView>
       );
     }

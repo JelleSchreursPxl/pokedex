@@ -152,13 +152,8 @@ type PokemonInfo = {
       name: string
     }
   }],
-  evolution: [{
-    evolves_to: [{
-      species: {
-        name: string
-        url : string
-      }
-    }]
+  forms: [{
+    name: string
   }]
 }
 
@@ -176,5 +171,16 @@ type RegisterUser = {
 type Store= {
   theme: {
     theme: any
+  }
+}
+
+type Evolution = {
+  chain: {
+    evolves_to: [{
+      species: {
+        name: string
+        url: string
+      }
+    }]
   }
 }

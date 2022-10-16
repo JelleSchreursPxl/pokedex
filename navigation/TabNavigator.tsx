@@ -2,6 +2,7 @@ import React, { useLayoutEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
+import { useTheme } from 'react-native-rapi-ui';
 
 // import screens
 import HomeScreen from '../screens/HomeScreen';
@@ -19,6 +20,7 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const navigation = useNavigation();
+  const { isDarkmode } = useTheme();
   
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,21 +30,25 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator screenOptions={( { route } ) => ({
-      tabBarActiveColor: '#E4000F',
       tabBarInactiveColor: 'gray',
       tabBarStyle: {
-        backgroundColor: '#fff',
+        backgroundColor: isDarkmode ? '#121212' : '#F9F9F9',
+        height: 60,
         borderTopWidth: 0,
-        elevation: 0,
-        margin: 4,
+        paddingBottom: 8,
       },
-      tabBarIcon: ({ focused, size, color }) => {
+      tabBarLabelStyle: {
+        fontSize: 10,
+        color: isDarkmode ? 'white' : 'black'
+      },
+
+      tabBarIcon: ({ focused, size }) => {
         if (route.name === 'Home') {
-          return <Icon name="home" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"} />
+          return <Icon name="home" type="font-awesome-5" size={size} color={focused ? isDarkmode ? "white": "black" : 'gray'} />
         } else if (route.name === 'Search') {
-          return <Icon name="search" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"} />
+          return <Icon name="search" type="font-awesome-5" size={size} color={focused ? isDarkmode ? "white": "black" : 'gray'} />
         } else if (route.name === 'Settings') {
-          return <Icon name="cog" type="font-awesome-5" size={size} color={focused ? "#E4000F": "gray"}/>
+          return <Icon name="cog" type="font-awesome-5" size={size} color={focused ? isDarkmode ?  "white": "black" : 'grey'}/>
         }
       }
     })}>

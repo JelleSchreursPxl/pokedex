@@ -1,31 +1,28 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState }from 'react'
 import { useTheme } from 'react-native-rapi-ui';
-import  AsyncStorage  from '@react-native-async-storage/async-storage';
+import { auth } from '../src/firebase';
+import { signOut } from 'firebase/auth';
+
+
+import { settings } from '../styles/settings';
 
 import {
   Switch
 } from 'react-native-paper';
-
+import Strings from '../constants/Strings';
 
 const SettingsScreen = () => {
   const { setTheme } = useTheme();
-  const [isEnabled, setEnabled] = useState(false);
-  const toggleSwitch = () => setEnabled(previousState => !previousState);
+  const [isDarkmode, setIsDarkmode] = useState<boolean>(false);
+  const [signedIn, setSignedIn] = useState(true);
 
-
-  const setDarkMode = async () => {
-    try {
-      if (isEnabled) {
-        await AsyncStorage.setItem('theme', 'light');
-        setTheme('light');
-      } else {
-        await AsyncStorage.setItem('theme', 'dark');
-        setTheme('dark');
-      }
-    } catch(error) {
-      console.log('error', error);
-    };
+  const toggleSwitch = () => {
+    setIsDarkmode(isDarkmode => !isDarkmode);
+    setTheme(isDarkmode ? 'light' : 'dark');
+  }
+  const setDarkMode = () => {
+    isDarkmode ? setTheme('light') : setTheme('dark');
   };
 
   const handleTheme = () => {
@@ -33,25 +30,28 @@ const SettingsScreen = () => {
     toggleSwitch();
   };
 
+
   return (
-    <SafeAreaView>
-      <View style={{display: 'flex', flexDirection: 'column', margin: 16, width: '100%'}}>
-        <Text style={{fontSize: 32, fontWeight:"700", marginBottom: 16}}>Settings</Text>
-        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center' ,marginVertical: 24}}>
-          <Switch onValueChange={handleTheme} value={isEnabled}/>
-          <Text style={{fontSize: 18, fontWeight: "500", marginLeft: 16}}>
-            Dark Mode
+    <SafeAreaView style={[settings.view, {backgroundColor: isDarkmode ? 'black' : 'white'}]}>
+      <View style={settings.container}>
+        <Text style={[settings.title, {color: isDarkmode ? 'white' : 'black'}]}>
+          {Strings.settingsScreen.title}
+          </Text>
+        <View style={settings.switchContainer}>
+          <Switch onValueChange={handleTheme} value={isDarkmode}/>
+          <Text style={[settings.switchText, {color: isDarkmode ? 'white' : 'black'}]}>
+            {Strings.settingsScreen.darkMode}
           </Text>
         </View>
       </View>
-      <View style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
-        <TouchableOpacity 
-          // onPress={handleSignOut}
-          style={{ width: '60%', backgroundColor: '#000', paddingVertical: 16, borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{fontSize: 16, fontWeight: "700", color: '#fff'}}>
-              Logout
+      <View style={settings.logout}>
+        {/* <TouchableOpacity 
+          // onPress={() => signOutUser}
+          style={[settings.logoutButton, {backgroundColor: isDarkmode ? 'white' : 'black'}]}>
+            <Text style={[settings.logoutText, {color: isDarkmode ? 'black' : 'white'}]}>
+              {Strings.settingsScreen.logout}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
       </View>
 
     </SafeAreaView>

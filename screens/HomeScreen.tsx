@@ -1,16 +1,15 @@
-import { SafeAreaView, Button, Image, Text} from 'react-native'
+import { SafeAreaView, Button, Image, Text, useColorScheme} from 'react-native'
 import React from 'react'
-import { useTheme } from 'react-native-rapi-ui'
+import { homescreen } from '../styles/homescreen'
+import { useTheme } from 'react-native-rapi-ui';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
-  const { isDarkmode, setTheme } = useTheme()
-  const handleTheme = () => {
-    setTheme(isDarkmode ? 'light' : 'dark')
-  }
+  const { isDarkmode } = useTheme();
 
   return (
-    <SafeAreaView style={{ padding: 16 }}>
-      <Image source={require('../assets/logo.png')} style={{width: 80, height: 80 }} />
+    <SafeAreaView style={[homescreen.container, {backgroundColor: isDarkmode ? 'black' : 'white'} ]}>
+      <Image source={require('../assets/logo.png')} style={homescreen.logo} />
       {/* <Text>Email: {auth.currentUser?.email}</Text> */}
     </SafeAreaView>
   )
