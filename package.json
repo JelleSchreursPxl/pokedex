@@ -11,6 +11,7 @@
     "dev:tailwind": "concurrently \"tailwindcss --input input.css --output tailwind.css --no-autoprefixer --watch\" \"tailwind-rn --watch\""
   },
   "dependencies": {
+    "@expo/config-plugins": "^5.0.4",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-firebase/firestore": "^15.7.0",
@@ -23,9 +24,11 @@
     "axios": "^1.1.2",
     "expo": "~46.0.13",
     "expo-asset": "~8.6.1",
-    "expo-camera": "~12.3.0",
+    "expo-camera": "^13.0.0",
     "expo-font": "~10.2.0",
+    "expo-media-library": "^15.0.0",
     "expo-notifications": "~0.16.1",
+    "expo-sharing": "^11.0.1",
     "expo-status-bar": "~1.4.0",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",

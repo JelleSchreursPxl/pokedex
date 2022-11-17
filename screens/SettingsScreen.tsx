@@ -1,9 +1,12 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState }from 'react'
+import React, { useEffect, useRef, useState }from 'react'
 import { useTheme } from 'react-native-rapi-ui';
+
+// Camera 
+
+
 import { auth } from '../src/firebase';
 import { signOut } from 'firebase/auth';
-
 
 import { settings } from '../styles/settings';
 
@@ -12,7 +15,7 @@ import {
 } from 'react-native-paper';
 import Strings from '../constants/Strings';
 
-const SettingsScreen = () => {
+const SettingsScreen = ( navigation : any ) => {
   const { setTheme } = useTheme();
   const [isDarkmode, setIsDarkmode] = useState<boolean>(false);
   const [signedIn, setSignedIn] = useState(true);
@@ -30,7 +33,6 @@ const SettingsScreen = () => {
     toggleSwitch();
   };
 
-
   return (
     <SafeAreaView style={[settings.view, {backgroundColor: isDarkmode ? 'black' : 'white'}]}>
       <View style={settings.container}>
@@ -43,6 +45,11 @@ const SettingsScreen = () => {
             {Strings.settingsScreen.darkMode}
           </Text>
         </View>
+      </View>
+      <View style={settings.container}>
+        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+          <Text>{Strings.settingsScreen.camera}</Text>
+        </TouchableOpacity>
       </View>
       <View style={settings.logout}>
         {/* <TouchableOpacity 

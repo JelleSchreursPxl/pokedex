@@ -40,6 +40,15 @@
             "./local/assets/notification-sound-other.wav"
           ]
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photoPermission": "Allow to access your photos",
+          "savePhotosPermission": "Allow to save photos to your photo library",
+          "microphonePermission": "Allow to access your microphone",
+          "isAccessMediaLocationEnabled": "true"
+        }
       ]
     ]
   }

@@ -4,6 +4,7 @@ export default {
     title: 'Settings',
     darkMode: 'Dark Mode',
     logout: 'Logout',
+    camera: 'Camera',	
   },
   pokemonScreen: {
     pokedex: 'Pokédex',
