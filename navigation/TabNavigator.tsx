@@ -8,6 +8,7 @@ import { useTheme } from 'react-native-rapi-ui';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import CameraView from '../components/CameraView';
 
 // Typescript definition types for TabNavigator
 export type TabParamList = {
@@ -49,12 +50,15 @@ const TabNavigator = () => {
           return <Icon name="search" type="font-awesome-5" size={size} color={focused ? isDarkmode ? "white": "black" : 'gray'} />
         } else if (route.name === 'Settings') {
           return <Icon name="cog" type="font-awesome-5" size={size} color={focused ? isDarkmode ?  "white": "black" : 'grey'}/>
+        } else if (route.name === 'Camera') {
+          return <Icon name="camera" type="font-awesome-5" size={size} color={focused ? isDarkmode ?  "white": "black" : 'grey'}/>
         }
       }
     })}>
       <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
       <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false}} />
       <Tab.Screen name="Settings" component={SettingsScreen} options={{headerShown: false}}/>
+      <Tab.Screen name="Camera" component={CameraView} options={{headerShown: false}}/>
     </Tab.Navigator>
   )
 }

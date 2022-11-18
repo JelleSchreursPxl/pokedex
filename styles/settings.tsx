@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { shadow } from 'react-native-paper'
 
 export const settings = StyleSheet.create({
   view:{
@@ -43,5 +44,11 @@ export const settings = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  camera: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    marginStart: 24,
+    padding: 16
   }
 })

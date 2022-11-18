@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, Text, StatusBar, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, StatusBar, Image, Button, SafeAreaView, StyleSheet} from 'react-native'
 import { useEffect, useState, useRef } from 'react'
 import { Camera, CameraType } from 'expo-camera'
 import { shareAsync } from 'expo-sharing'
 import * as MediaLibrary from 'expo-media-library'
+import { Icon } from '@rneui/themed'
 
 const CameraView = () => {
-  let camerRef = useRef<any>();
+  let camerRef = useRef<Camera>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>();
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState<boolean>();
   const [hasGalleryPermission, setHasGalleryPermission] = useState<boolean>();
@@ -21,7 +22,7 @@ const CameraView = () => {
       setHasCameraPermission(cameraPersmission.status === 'granted');
       setHasMicrophonePermission(microphonePermission.status === 'granted');
       setHasGalleryPermission(galleryPermission.status === 'granted');
-    })
+    })();
   }, [])
 
   if(hasCameraPermission === undefined){
@@ -40,7 +41,7 @@ const CameraView = () => {
       base64: true,
       exif: false,
     };
-      const newPic = await camerRef.current.takePictureAsync(options);
+      const newPic = await camerRef.current?.takePictureAsync(options);
       setPhoto(newPic);
     };
 
@@ -55,21 +56,34 @@ const CameraView = () => {
         setPhoto(undefined);
       });
     }
+
     return (
       <SafeAreaView style={{flex: 1}}>
         <StatusBar hidden={true} />
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Image source={{uri: "data:image/jpg;base64," + photo.uri}} style={{width: 300, height: 300}} />
-          <TouchableOpacity onPress={sharePic}>
-            <Text>Share</Text>
-          </TouchableOpacity>
+          <View style={{ flex: 0.1, flexDirection: 'row', justifyContent: 'space-around', 
+                         alignItems: 'center', width: 160, marginBottom: 8,
+                         borderRadius: 48, paddingHorizontal: 24, 
+                         paddingVertical: 8, borderColor: '#007bff', borderWidth: 1 }}>
+            <Icon name="share" type="font-awesome-5" size={16} />
+            <Button onPress={sharePic} title='Share'/>
+          </View>
           {hasGalleryPermission ? 
-            <TouchableOpacity onPress={savePic}>
-              <Text>Save</Text>
-            </TouchableOpacity> : undefined }
-          <TouchableOpacity onPress={() => setPhoto(undefined)}>
-            <Text>Discard</Text>
-          </TouchableOpacity>
+          <View style={{ flex: 0.1, flexDirection: 'row', justifyContent: 'space-around', 
+                          alignItems: 'center', width: 160, marginBottom: 8,
+                          borderRadius: 48, paddingHorizontal: 24, 
+                          paddingVertical: 8, borderColor: '#007bff', borderWidth: 1 }}>
+            <Icon name="save" type="font-awesome-5" size={16} />
+            <Button onPress={savePic} title='Save'/>
+          </View> : undefined }
+          <View style={{ flex: 0.1, flexDirection: 'row', justifyContent: 'space-around', 
+                          alignItems: 'center', width: 160, marginBottom: 8,
+                          borderRadius: 48, paddingHorizontal: 24, 
+                          paddingVertical: 8, borderColor: '#007bff', borderWidth: 1 }}>
+            <Icon name="eraser" type="font-awesome-5" size={16} />
+            <Button onPress={() => setPhoto(undefined)} title='Discard'/>
+          </View>
         </View>
       </SafeAreaView>
     )
@@ -79,8 +93,10 @@ const CameraView = () => {
     return (
       <Camera ref={camerRef} style={{ flex: 1 }} type={CameraType.back}>
         <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row' }}>
-          <View style={{ flex: 0.1, alignSelf: 'flex-end', alignItems: 'center' }}>
-            <TouchableOpacity onPress={takePicture}/>
+          <View style={{ flex: 1, alignSelf: 'flex-end', alignContent: 'center',
+                alignItems: 'center', borderRadius: 40, backgroundColor: 'white',
+                width: 80, height: 80, marginBottom: 24, marginHorizontal: 168 }}>
+            <Button onPress={takePicture} title=''/>
           </View>
         </View>
         <StatusBar hidden={true} />
@@ -88,4 +104,4 @@ const CameraView = () => {
     )
 }
 
-export default CameraView;
+export default CameraView

@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-// import { firebase } from '../firebase'
-
-// auth screens
-// import LoginScreen  from '../screens/auth/LoginScreen'
-// import RegisterScreen  from '../screens/auth/RegisterScreen' 
 
 // app navigation
 import TabNavigator from './TabNavigator';
@@ -19,7 +14,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 // const AuthStack = createNativeStackNavigator();
 
 const RootNavigator = () => {
-    return (
+    return(
       <RootStack.Navigator>
         <RootStack.Group>
           <RootStack.Screen name="Main" component={TabNavigator} />

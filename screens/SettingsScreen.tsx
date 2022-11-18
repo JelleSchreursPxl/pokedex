@@ -1,24 +1,21 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useRef, useState }from 'react'
+import React, { useState }from 'react'
+import { Icon } from '@rneui/themed';
 import { useTheme } from 'react-native-rapi-ui';
-
-// Camera 
-
-
-import { auth } from '../src/firebase';
-import { signOut } from 'firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 import { settings } from '../styles/settings';
+import  CameraView  from '../components/CameraView';
 
 import {
   Switch
 } from 'react-native-paper';
 import Strings from '../constants/Strings';
 
-const SettingsScreen = ( navigation : any ) => {
+const SettingsScreen = () => {
+  const navigation = useNavigation();
   const { setTheme } = useTheme();
   const [isDarkmode, setIsDarkmode] = useState<boolean>(false);
-  const [signedIn, setSignedIn] = useState(true);
 
   const toggleSwitch = () => {
     setIsDarkmode(isDarkmode => !isDarkmode);
@@ -46,21 +43,6 @@ const SettingsScreen = ( navigation : any ) => {
           </Text>
         </View>
       </View>
-      <View style={settings.container}>
-        <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-          <Text>{Strings.settingsScreen.camera}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={settings.logout}>
-        {/* <TouchableOpacity 
-          // onPress={() => signOutUser}
-          style={[settings.logoutButton, {backgroundColor: isDarkmode ? 'white' : 'black'}]}>
-            <Text style={[settings.logoutText, {color: isDarkmode ? 'black' : 'white'}]}>
-              {Strings.settingsScreen.logout}
-            </Text>
-          </TouchableOpacity> */}
-      </View>
-
     </SafeAreaView>
   )
 }
