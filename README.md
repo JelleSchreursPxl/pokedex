@@ -12,7 +12,7 @@ React Native - Typescript
 
 ### Link
 
-[Github link](https://github.com/android/android-test)
+[Github link]([https://github.com/android/android-test](https://github.com/JelleSchreursPxl/pokedex))
 
 ### Branch
 
