@@ -67,9 +67,9 @@ Branch: **MobileDevFinished**
 - Camera with microphone & gallery access
 
 
-##### Tech Stack
-**Client:** React Native \
-**Database:** Firebase
+##### Tech 
+**React Native** \
+**Firebase**
 
 
 ###### Authors - students
