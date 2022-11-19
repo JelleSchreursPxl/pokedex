@@ -8,6 +8,7 @@ import AuthNavigator from './navigation/AuthNavigator';
 import { auth } from './database/firebase';
 
 export default function App() {
+  const test = ''
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) =>{
