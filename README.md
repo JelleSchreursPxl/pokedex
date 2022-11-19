@@ -6,7 +6,7 @@ Student 1: Jelle Schreurs
 Pokedex
 
 ## Programmeertaal
-React Native
+React Native - Typescript
 
 ## Github link en branch
 
