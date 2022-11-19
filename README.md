@@ -1,12 +1,12 @@
 
-# Pokedex
+## Pokedex
 Student: 1, Jelle Schreurs
 
-#### Short Description
+##### Short Description
 
 
-## Lesson Features
-#### Minimal requirements: 
+### Lesson Features
+##### Minimal requirements: 
 - Flatlist - equivalent of recyclerview
 - 3 components
     - CameraView
@@ -43,7 +43,7 @@ Student: 1, Jelle Schreurs
 - API call 
     - public API: https://pokeapi.co/
     
-### Features
+##### Extra Features
 - Light/dark mode toggle
 - Firebase Auth
     - login
@@ -52,13 +52,13 @@ Student: 1, Jelle Schreurs
 - Camera with microphone & gallery access
 
 
-### Tech Stack
+##### Tech Stack
 **Client:** React Native \
 **Database:** Firebase
 
 
-### Authors - students
-- [@jelleschreurspxl](https://www.github.com/jelleschreurspxl)
+###### Authors - students
+[@jelleschreurspxl](https://www.github.com/jelleschreurspxl)
 
 
 
