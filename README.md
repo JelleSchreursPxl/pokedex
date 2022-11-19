@@ -9,6 +9,9 @@ om zo eventuele interessante bezoeken vast te leggen via de applicatie.
 De applicatie voorziet nu vooral de functionaliteiten van inloggen, registreren en favoriten kiezen. \
 Ook is er een darkmode voorzien. Toekomstfeatures: Teams samenstellen en doorsturen naar anderen, eventuele visuele battles.
 
+## Link naar wireframes
+https://www.figma.com/file/5qYkfLCiScnMCMZje7ZeL1/Pok%C3%A9dex_wireframes?node-id=0%3A1&t=7BtWgalMCLhitunC-1
+
 ## Link naar filmpje
 
 
@@ -20,8 +23,8 @@ Branch: **MobileDevFinished**
 
 ### Lesson Features
 ##### Minimal requirements: 
-- Flatlist - equivalent of recyclerview
-- 3 components
+- **Flatlist** - equivalent of recyclerview
+- 3 **components** - equivalent of fragments
     - CameraView
     - LandscapeView
         - master - detail
@@ -29,7 +32,7 @@ Branch: **MobileDevFinished**
         - reusable item for every pokemon
         -
 #### Aantal schermen
-- 5 screens
+- 5 **screens**
     - 1 auth
         - loginscreen
             - login action
@@ -40,14 +43,14 @@ Branch: **MobileDevFinished**
     - pokemonScreen:  
         - detailscreen of a single selected pokemon
             - AsyncStorage on favorite
-            - local storage & asynchronous methods
+            - **local storage** & asynchronous methods
     - searchScreen: 
         - list overview of all 151 original pokemon
     - settingsScreen: 
         - enable darkmode 
         - logout button
 
-- resources
+- **resources**
     - assets 
         - images
         - constants 
@@ -55,7 +58,7 @@ Branch: **MobileDevFinished**
             - Strings
             - Env for firebase
 
-- API call 
+- **API call** 
     - public API: https://pokeapi.co/
     
 ##### Extra Features
@@ -68,7 +71,7 @@ Branch: **MobileDevFinished**
 
 
 ##### Tech 
-**React Native** \
+**React Native - Typescript** \
 **Firebase**
 
 
