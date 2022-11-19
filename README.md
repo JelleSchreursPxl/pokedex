@@ -9,8 +9,10 @@ om zo eventuele interessante bezoeken vast te leggen via de applicatie.
 De applicatie voorziet nu vooral de functionaliteiten van inloggen, registreren en favoriten kiezen. \
 Ook is er een darkmode voorzien. Toekomstfeatures: Teams samenstellen en doorsturen naar anderen, eventuele visuele battles.
 
-## Link naar wireframes
+## Link naar wireframes & image
 https://www.figma.com/file/5qYkfLCiScnMCMZje7ZeL1/Pok%C3%A9dex_wireframes?node-id=0%3A1&t=7BtWgalMCLhitunC-1
+![image](https://user-images.githubusercontent.com/74589688/202860119-910d2516-f66b-4948-99da-0c60ed527ef6.png)
+
 
 ## Link naar filmpje
 
