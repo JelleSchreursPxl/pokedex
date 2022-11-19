@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StatusBar, Image, Button, SafeAreaView, StyleSheet} from 'react-native'
+import { View, Text, StatusBar, Image, Button, SafeAreaView } from 'react-native'
 import { useEffect, useState, useRef } from 'react'
 import { Camera, CameraType } from 'expo-camera'
 import { shareAsync } from 'expo-sharing'
@@ -7,21 +7,21 @@ import * as MediaLibrary from 'expo-media-library'
 import { Icon } from '@rneui/themed'
 
 const CameraView = () => {
-  let camerRef = useRef<Camera>(null);
+  let referenceForCamera = useRef<Camera>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean>();
-  const [hasMicrophonePermission, setHasMicrophonePermission] = useState<boolean>();
-  const [hasGalleryPermission, setHasGalleryPermission] = useState<boolean>();
+  const [hasPermissionForMicrophone, setHasPermissionForMicrophone] = useState<boolean>();
+  const [hasPermissionForGallery, setHasPermissionForGallery] = useState<boolean>();
   const [photo, setPhoto] = useState<any>();
 
   useEffect(() => {
     (async () => {
-      const cameraPersmission = await Camera.requestCameraPermissionsAsync();
-      const microphonePermission = await Camera.requestMicrophonePermissionsAsync();
-      const galleryPermission = await MediaLibrary.requestPermissionsAsync();
+      const PermissionForCamera = await Camera.requestCameraPermissionsAsync();
+      const PermissionForMicrophone = await Camera.requestMicrophonePermissionsAsync();
+      const PermissionForGallery = await MediaLibrary.requestPermissionsAsync();
 
-      setHasCameraPermission(cameraPersmission.status === 'granted');
-      setHasMicrophonePermission(microphonePermission.status === 'granted');
-      setHasGalleryPermission(galleryPermission.status === 'granted');
+      setHasCameraPermission(PermissionForCamera.status === 'granted');
+      setHasPermissionForMicrophone(PermissionForMicrophone.status === 'granted');
+      setHasPermissionForGallery(PermissionForGallery.status === 'granted');
     })();
   }, [])
 
@@ -29,19 +29,19 @@ const CameraView = () => {
     return <Text>Requesting permissions...</Text>
   } else if (!hasCameraPermission) {
     return <Text>No access to camera</Text>
-  } else if (!hasMicrophonePermission) {
+  } else if (!hasPermissionForMicrophone) {
     return <Text>No access to microphone</Text>
-  } else if (!hasGalleryPermission) {
+  } else if (!hasPermissionForGallery) {
     return <Text>No access to gallery</Text>
   } 
 
-  const takePicture = async () => {
+  const takePic = async () => {
     let options = {
       quality: 1,
       base64: true,
       exif: false,
     };
-      const newPic = await camerRef.current?.takePictureAsync(options);
+      const newPic = await referenceForCamera.current?.takePictureAsync(options);
       setPhoto(newPic);
     };
 
@@ -69,7 +69,7 @@ const CameraView = () => {
             <Icon name="share" type="font-awesome-5" size={16} />
             <Button onPress={sharePic} title='Share'/>
           </View>
-          {hasGalleryPermission ? 
+          {hasPermissionForGallery ? 
           <View style={{ flex: 0.1, flexDirection: 'row', justifyContent: 'space-around', 
                           alignItems: 'center', width: 160, marginBottom: 8,
                           borderRadius: 48, paddingHorizontal: 24, 
@@ -89,14 +89,13 @@ const CameraView = () => {
     )
   }
   
-
     return (
-      <Camera ref={camerRef} style={{ flex: 1 }} type={CameraType.back}>
+      <Camera ref={referenceForCamera} style={{ flex: 1 }} type={CameraType.back}>
         <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row' }}>
           <View style={{ flex: 1, alignSelf: 'flex-end', alignContent: 'center',
-                alignItems: 'center', borderRadius: 40, backgroundColor: 'white',
+                alignItems: 'center', borderRadius: 40, backgroundColor: 'white', justifyContent: 'center',
                 width: 80, height: 80, marginBottom: 24, marginHorizontal: 168 }}>
-            <Button onPress={takePicture} title=''/>
+            <Button onPress={takePic} title='  '/>
           </View>
         </View>
         <StatusBar hidden={true} />

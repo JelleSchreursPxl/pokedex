@@ -11,7 +11,6 @@ export type RootStackParamList = {
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
-// const AuthStack = createNativeStackNavigator();
 
 const RootNavigator = () => {
     return(

@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'react-native-rapi-ui';
-import { NavigationContainer, useTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import RootNavigator from './navigation/RootNavigator';
 import AuthNavigator from './navigation/AuthNavigator';
-import firebase from 'firebase';
+
+import { auth } from './database/firebase';
 
 export default function App() {
-  const user = firebase.auth().currentUser;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) =>{
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    })
+    return unsubscribe
+  }, [])
+
 
   const render = () => {
-    if (user) {
+    if (isAuthenticated) {
       return <RootNavigator />;
     } else {
       return <AuthNavigator />;
@@ -19,7 +31,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
-        {render()}
+        <NavigationContainer>{render()}</NavigationContainer>
     </ThemeProvider>
   );
 }

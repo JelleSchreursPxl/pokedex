@@ -1,25 +1,16 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+
+import React, { useState } from 'react'
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import Strings from '../../constants/Strings';
 import { auth } from '../../database/firebase';
+
+import { loginscreen } from '../../styles/loginscreen';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation()
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: any) =>{
-      if (user) {
-        // navigation.replace("Home")
-      }
-    })
-
-    return unsubscribe
-  }, [])
-
-  const handleSignUp = () => {
+  const signUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials: { user: any; }) => {
@@ -29,7 +20,7 @@ const LoginScreen = () => {
       .catch((error: { message: any; }) => alert(error.message))
   }
 
-  const handleLogin = () => {
+  const login = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials: { user: any; }) => {
@@ -41,37 +32,38 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={loginscreen.container}
       behavior="padding"
     >
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+      <Image source={require('../../assets/pokedex.png')} style={loginscreen.image} />
+        <View style={loginscreen.inputContainer}>
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
+            style={loginscreen.input} />
+        </View>
+        <View style={loginscreen.inputContainer}>
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            style={loginscreen.input}
+            secureTextEntry />
+        </View>
 
-      <View style={styles.buttonContainer}>
+      <View style={loginscreen.buttonContainer}>
         <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
+          onPress={login}
+          style={loginscreen.button}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={loginscreen.buttonText}>{Strings.loginScreen.login}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleSignUp}
-          style={[styles.button, styles.buttonOutline]}
+          onPress={signUp}
+          style={[loginscreen.button, loginscreen.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
+          <Text style={loginscreen.buttonOutlineText}>{Strings.loginScreen.register}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -79,50 +71,3 @@ const LoginScreen = () => {
 }
 
 export default LoginScreen
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%'
-  },
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-})

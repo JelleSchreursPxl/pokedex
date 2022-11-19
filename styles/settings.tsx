@@ -28,7 +28,9 @@ export const settings = StyleSheet.create({
     marginLeft: 16
   },
   logout: {
-    display: 'flex',
+    flex: 1,
+    marginTop: 400,
+    alignContent: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -50,5 +52,23 @@ export const settings = StyleSheet.create({
     alignItems: 'flex-start',
     marginStart: 24,
     padding: 16
-  }
+  },
+  subcontainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+   button: {
+    backgroundColor: '#687572',
+    width: '60%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
 })
